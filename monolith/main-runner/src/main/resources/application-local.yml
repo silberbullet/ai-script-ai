@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: ${BOARD_POSTGRESQL_URL:jdbc:postgresql://localhost:5433/club}
+    username: ${BOARD_POSTGRESQL_USERNAME:root}
+    password: ${BOARD_POSTGRESQL_PASSWORD:root}
+
+  data:
+    redis:
+      host: ${REDIS_URL:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+
+  flyway:
+    locations:
+      - db/migration/dummy
+
+logging:
+  level:
+    root: debug
+    # JDK RMI transport, class-loader, and connector activities
+    sun.rmi.transport.tcp: INFO
+    sun.rmi.loader: INFO
+    javax.management.remote.rmi: INFO

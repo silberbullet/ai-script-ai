@@ -1,0 +1,6 @@
+package club.common.validation.model.interfaces;
+
+public interface SteppedDateTimeValidationProperty extends DateTimeBaseValidationProperty {
+    String step();
+    String stepEpoch();
+}

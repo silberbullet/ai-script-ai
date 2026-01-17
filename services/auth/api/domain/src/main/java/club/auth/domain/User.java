@@ -1,0 +1,47 @@
+package club.auth.domain;
+
+import club.auth.domain.type.UserStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.Instant;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+    
+    private String id;
+    
+    private String username;
+    
+    private String email;
+    
+    private String encodedPassword;
+    
+    private UserStatus status;
+
+    private Integer loginRetryCount;
+    
+    private Instant lockedUntil;
+
+    private Instant createdAt;
+    
+    private Instant updatedAt;
+
+    // 회원가입 필수 약관 동의 여부 확인
+    public static void validateAgreed(boolean agreedTerms, boolean agreedPrivacy) {
+        if (!agreedTerms || !agreedPrivacy) {
+            throw new IllegalArgumentException("필수 약관에 동의하지 않았습니다.");
+        }
+    }
+
+    public void updateStatus(UserStatus status) {
+        this.status = status;
+    }
+}
