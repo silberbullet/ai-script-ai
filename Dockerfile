@@ -1,22 +1,22 @@
 ## 0. 빌드
-#FROM gradle:8.10.1-jdk21 AS builder
+FROM gradle:8.10.1-jdk21 AS builder
 #
 ## 작업 디렉토리
-#WORKDIR /workspace
+WORKDIR /workspace
 #
 ## Gradle 캐시 최적화: build.gradle, settings.gradle, gradle.properties 먼저 복사
-#COPY build.gradle.kts settings.gradle.kts gradle.properties gradlew ./
-#COPY gradle ./gradle
-#RUN ./gradlew --version
+COPY build.gradle.kts settings.gradle.kts gradle.properties gradlew ./
+COPY gradle ./gradle
+RUN ./gradlew --version
 #
 ## 의존성만 먼저 다운
-#RUN ./gradlew dependencies --no-daemon || return 0
+RUN ./gradlew dependencies --no-daemon || return 0
 #
 ## 소스 복사
-#COPY . .
+COPY . .
 #
 ## bootJar 빌드
-#RUN ./gradlew :main-runner:bootJar --no-daemon
+RUN ./gradlew :main-runner:bootJar --no-daemon
 
 # 1. Base image: OpenJDK 21 slim
 FROM openjdk:21-slim
