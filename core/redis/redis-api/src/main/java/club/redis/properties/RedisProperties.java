@@ -13,6 +13,8 @@ import java.util.Map;
 public record RedisProperties(
         Boolean useClusterMode,
         List<String> nodes,
+        String username,
+        String password,
         RedisCacheProperties cache
 ) {
     public RedisProperties {
