@@ -170,7 +170,9 @@ public final class AuthCommandDto {
     @Schema(description = "로그인 응답")
     public record LoginResponse(
             @Schema(description = "액세스 토큰(jwt)", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdW4xMjMiLCJpYXQiOjE2NTY1MjY4MDB9.a_XGbI5TW6G5lNO5R4uK_KPOtVz7b5Ue8i6W0Or6BlY")
-            String accessToken
+            String accessToken,
+            @Schema(description = "사용자이름", example = "박경우")
+            String username
     ) {
     }
 }

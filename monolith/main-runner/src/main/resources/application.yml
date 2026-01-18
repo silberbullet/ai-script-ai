@@ -5,7 +5,6 @@ spring:
   flyway:
      enabled: false  # (중요) 기본 Flyway Auto-run 끄고, 우리가 만든 authFlyway만 실행
 
-
   config:
     import:
       - properties/auth/auth.yml

@@ -5,15 +5,15 @@ import club.auth.domain.type.UserStatus;
 import club.auth.exception.AuthException;
 import club.auth.port.AuthCommandRepositoryPort;
 import club.auth.port.PasswordEncoderPort;
-import club.auth.readmodel.AuthCommandModels.LoginTokenModel;
+import club.auth.readmodel.AuthCommandModels.LoginModel;
 import club.auth.readmodel.AuthCommandModels.SignInRequestModel;
-import club.auth.readmodel.AuthCommandModels.SignUpRequestModel;
 import club.auth.readmodel.AuthCommandModels.SignOutRequestModel;
+import club.auth.readmodel.AuthCommandModels.SignUpRequestModel;
 import club.auth.usecase.sign.AuthEmailCheckUseCase;
-import club.auth.usecase.sign.AuthSignOutUseCase;
-import club.auth.usecase.token.AuthIssueTokenUseCase;
 import club.auth.usecase.sign.AuthSignInUseCase;
+import club.auth.usecase.sign.AuthSignOutUseCase;
 import club.auth.usecase.sign.AuthSignUpUseCase;
+import club.auth.usecase.token.AuthIssueTokenUseCase;
 import club.auth.usecase.token.AuthRevokeTokenUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,6 @@ public class AuthSignService implements AuthSignUpUseCase, AuthSignInUseCase, Au
     /**
      * 이메일 중복 여부 확인
      *
-     * @param email
      * @return boolean
      */
     @Override
@@ -47,11 +46,10 @@ public class AuthSignService implements AuthSignUpUseCase, AuthSignInUseCase, Au
     /**
      * 회원가입
      *
-     * @param signUpRequest
-     * @return LoginTokenModel
+     * @return LoginModel
      */
     @Override
-    public LoginTokenModel signUp(SignUpRequestModel signUpRequest) {
+    public LoginModel signUp(SignUpRequestModel signUpRequest) {
         var newUser = commandRepository.transaction(() -> {
             // 1. email 중복 체크
             boolean exists = commandRepository.existsByEmail(signUpRequest.email());
@@ -76,17 +74,20 @@ public class AuthSignService implements AuthSignUpUseCase, AuthSignInUseCase, Au
         });
         
         // 5. 사용자 회원 가입 성공 시, accessToken & refreshToken 발급
-        return authIssueTokenUseCase.issueToken(newUser.getId());
+        return LoginModel.builder()
+                .username(newUser.getUsername())
+                .loginTokenModel(authIssueTokenUseCase.issueToken(newUser.getId()))
+                .build()
+                ;
     }
     
     /**
      * 로그인
      *
-     * @param signInRequest
-     * @return LoginTokenModel
+     * @return LoginModel
      */
     @Override
-    public LoginTokenModel signIn(SignInRequestModel signInRequest) {
+    public LoginModel signIn(SignInRequestModel signInRequest) {
         // 1. email 사용자 조회
         var user = commandRepository.findByEmail(signInRequest.email())
                 .orElseThrow(() -> new AuthException(AUTH_ACCOUNT_LOGIN_FAILED));
@@ -97,13 +98,16 @@ public class AuthSignService implements AuthSignUpUseCase, AuthSignInUseCase, Au
         }
         
         // 3. 사용자 인증 성공 시, accessToken & refreshToken 발급
-        return authIssueTokenUseCase.issueToken(user.getId());
+        return LoginModel.builder()
+                .username(user.getUsername())
+                .loginTokenModel(authIssueTokenUseCase.issueToken(user.getId()))
+                .build()
+                ;
     }
     
     /**
      * 로그아웃
      *
-     * @param signOutRequestModel
      */
     @Override
     public void logout(SignOutRequestModel signOutRequestModel) {

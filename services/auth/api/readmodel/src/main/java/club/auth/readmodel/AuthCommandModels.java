@@ -27,6 +27,13 @@ public final class AuthCommandModels {
     }
     
     @Builder
+    public record LoginModel(
+            String username,
+            LoginTokenModel loginTokenModel
+    ) {
+    }
+    
+    @Builder
     public record LoginTokenModel(
             String accessToken,
             String refreshToken
