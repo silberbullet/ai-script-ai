@@ -1,5 +1,6 @@
 package club.auth.web;
 
+import club.auth.readmodel.AuthCommandModels.LoginModel;
 import club.auth.readmodel.AuthCommandModels.SignOutRequestModel;
 import club.auth.readmodel.AuthCommandModels.LoginTokenModel;
 import club.auth.readmodel.AuthCommandModels.SignInRequestModel;
@@ -48,10 +49,10 @@ public class AuthCommandApi {
     public ResponseEntity<LoginResponse> signUp(@RequestBody SignUpRequest signUpRequest) {
         // 회원 가입 로직 구현
         SignUpRequestModel requestModel = mapper.toModel(signUpRequest);
-        LoginTokenModel responseModel = authSignUpUseCase.signUp(requestModel);
-        LoginResponse result = mapper.toDto(responseModel);
+        LoginModel responseModel = authSignUpUseCase.signUp(requestModel);
+        LoginResponse result = mapper.toDto(responseModel, responseModel.loginTokenModel().accessToken());
         
-        ResponseCookie refreshTokenCookie = cookieUtil.createRefreshTokenCookie(responseModel.refreshToken());
+        ResponseCookie refreshTokenCookie = cookieUtil.createRefreshTokenCookie(responseModel.loginTokenModel().refreshToken());
         
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
@@ -69,10 +70,10 @@ public class AuthCommandApi {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         // 로그인 로직 구현
         SignInRequestModel requestModel = mapper.toModel(loginRequest);
-        LoginTokenModel responseModel = authSignInUseCase.signIn(requestModel);
-        LoginResponse result = mapper.toDto(responseModel);
+        LoginModel responseModel = authSignInUseCase.signIn(requestModel);
+        LoginResponse result = mapper.toDto(responseModel, responseModel.loginTokenModel().accessToken());
         
-        ResponseCookie refreshTokenCookie = cookieUtil.createRefreshTokenCookie(responseModel.refreshToken());
+        ResponseCookie refreshTokenCookie = cookieUtil.createRefreshTokenCookie(responseModel.loginTokenModel().refreshToken());
         
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())

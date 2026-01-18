@@ -1,6 +1,7 @@
 package club.auth.web.mapper;
 
 import club.auth.domain.User;
+import club.auth.readmodel.AuthCommandModels.LoginModel;
 import club.auth.readmodel.AuthCommandModels.LoginTokenModel;
 import club.auth.readmodel.AuthCommandModels.SignInRequestModel;
 import club.auth.readmodel.AuthCommandModels.SignOutRequestModel;
@@ -21,5 +22,7 @@ public interface AuthDtoMapper {
     
     SignOutRequestModel toModel(String userId, String refreshToken);
     
-    LoginResponse toDto(LoginTokenModel signUpRequestModel);
+    LoginResponse toDto(LoginTokenModel loginTokenModel);
+    
+    LoginResponse toDto(LoginModel loginModel, String accessToken);
 }
