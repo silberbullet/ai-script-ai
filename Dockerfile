@@ -15,6 +15,7 @@ RUN ./gradlew :main-runner:dependencies --no-daemon || true
 COPY . .
 
 # bootJar
+RUN chmod +x gradlew
 RUN ./gradlew :main-runner:bootJar --no-daemon
 
 
