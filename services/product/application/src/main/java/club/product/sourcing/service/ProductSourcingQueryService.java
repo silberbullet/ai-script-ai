@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static club.product.sourcing.exception.ProductErrorCode.SOURCING_NOT_FOUND;
+import static club.product.sourcing.exception.ProductErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +27,12 @@ public class ProductSourcingQueryService implements ProductSourcingReadUseCase {
             String userId,
             ProductSourcingSearchCondition searchCondition
     ) {
-        Objects.requireNonNull(userId, "userId is required");
-        Objects.requireNonNull(searchCondition, "searchCondition is required");
+        if (userId.isEmpty()) throw USER_NOT_FOUND.exception();
         
-        Instant fromInclusive = Objects.requireNonNull(searchCondition.from(), "fromInclusive is required");
-        Instant toExclusive = Objects.requireNonNull(searchCondition.to(), "toExclusive is required");
+        Instant fromInclusive = searchCondition.from();
+        Instant toExclusive = searchCondition.to();
         
-        if (!fromInclusive.isBefore(toExclusive)) {
+        if ((fromInclusive != null && toExclusive != null) && !fromInclusive.isBefore(toExclusive)) {
             throw ProductErrorCode.INVALID_DATE_RANGE.exception();
         }
         

@@ -1,6 +1,6 @@
 auth:
   flyway:
-    locations: classpath:db/migration/auth/v1
+    locations: classpath:db/migration/v1
     schema: auth
     create-schemas: false
     baseline-on-migrate: false
