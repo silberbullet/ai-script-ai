@@ -15,8 +15,11 @@ spring:
 
 logging:
   level:
-    root: debug
-    # JDK RMI transport, class-loader, and connector activities
-    sun.rmi.transport.tcp: INFO
-    sun.rmi.loader: INFO
-    javax.management.remote.rmi: INFO
+    root: INFO
+    club: DEBUG  # 비즈니스 로직
+    org.springframework.web: WARN   # 프레임워크
+    org.hibernate.SQL: DEBUG         # 쿼리 (파라미터 제외)
+    org.hibernate.type.descriptor.sql: TRACE  # 파라미터 (필요시)
+
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId:-}]"

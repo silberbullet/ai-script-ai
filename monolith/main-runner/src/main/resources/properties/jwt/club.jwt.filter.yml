@@ -31,17 +31,3 @@ app:
           methods: "*"
         - path: "/auth/email/password/reset/send"
           methods: "*"
-        # Blog
-        - path: "/blogs/*/ownership"
-          methods: "*"
-          description: |
-            블로그 소유권 확인
-        - path: "/blogs/*"
-          methods: "get"
-          description: |
-            블로그 단건 조회
-        # Series
-        - path: "/series/*"
-          methods: "get"
-          description: |
-            시리즈 단건 조회
