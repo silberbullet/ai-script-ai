@@ -9,6 +9,7 @@ import club.product.sourcing.usecase.ProductSourcingUpdateUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static club.product.sourcing.exception.ProductErrorCode.INVALID_BULK_REQUEST;
@@ -52,8 +53,13 @@ public class ProductSourcingCommandService implements ProductSourcingBulkSaveCas
             }
             
             // 2-1) 생성
-            var bulkProductSourcingList = create(userId, safeUpserts.stream().filter(s -> s.getId() == null).toList());
+            var bulkProductSourcingList = new ArrayList<ProductSourcing>();
+            var newProductSourcingList = safeUpserts.stream().filter(s -> s.getId() == null).toList();
             
+            if(!newProductSourcingList.isEmpty()) {
+                bulkProductSourcingList.addAll(create(userId, newProductSourcingList));
+            }
+         
             // 2-2) 수정 (소유자 검증 필수)
             safeUpserts.stream().filter(s -> s.getId() != null) .forEach((s) -> bulkProductSourcingList.add(update(userId, s.getId(), s)));
             

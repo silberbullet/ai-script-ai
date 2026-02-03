@@ -46,7 +46,7 @@ public class ProductSourcingQueryService implements ProductSourcingReadUseCase {
         boolean hasNext = searchCondition.size() < summaryList.size();
         
         // size 갯수만 반환
-        summaryList = hasNext ? summaryList.subList(0, summaryList.size()) : summaryList;
+        summaryList = hasNext ? summaryList.subList(0, searchCondition.size()) : summaryList;
         
         // 마지막 날짜, ID
         Instant nextCursorCreatedAt = null;

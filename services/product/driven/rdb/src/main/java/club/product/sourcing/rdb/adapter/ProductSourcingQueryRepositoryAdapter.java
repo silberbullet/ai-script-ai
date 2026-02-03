@@ -68,7 +68,7 @@ public class ProductSourcingQueryRepositoryAdapter implements ProductSourcingQue
                         productSourcingEntity.createdAt.desc(),
                         productSourcingEntity.id.desc()
                 )
-                .limit(size + 1) // hasNext 판단용
+                .limit(size)
                 .fetch();
         
         return sourcingList.stream()
