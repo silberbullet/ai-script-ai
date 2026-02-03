@@ -1,5 +1,6 @@
 package club.jwt.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -19,8 +20,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 import static club.jwt.parser.exception.JwtParserErrorCode.JWT_ACCESS_TOKEN_REQUIRED;
 
@@ -61,18 +64,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             } else {
                 log.warn("JWT 토큰이 만료되었습니다.");
-                sendUnauthorizedResponse(response, "JWT 토큰이 만료되었습니다.", e.getMessage());
+                sendUnauthorizedResponse(request, response, "JWT 토큰이 만료되었습니다.", e.getMessage());
             }
         } catch (JwtException e) {
             log.error("JWT 토큰이 유효하지 않습니다.");
-            sendUnauthorizedResponse(response, "JWT 토큰이 유효하지 않습니다.", e.getMessage());
+            sendUnauthorizedResponse(request, response, "JWT 토큰이 유효하지 않습니다.", e.getMessage());
         } catch (JwtParsingException e) {
             if (e.getErrorCode() != JWT_ACCESS_TOKEN_REQUIRED) {
                 log.debug("에러 코드: {}", e.getErrorCode());
                 throw e;
             }
             log.debug("JWT 토큰이 존재하지 않습니다.");
-            sendUnauthorizedResponse(response, "JWT 토큰이 존재하지 않습니다.", "Authorization 헤더에 JWT 토큰이 존재하지 않습니다.");
+            sendUnauthorizedResponse(request, response, "JWT 토큰이 존재하지 않습니다.", "Authorization 헤더에 JWT 토큰이 존재하지 않습니다.");
         }
     }
     
@@ -122,19 +125,35 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         return authorizationHeader.substring(7);
     }
     
-    private void sendUnauthorizedResponse(HttpServletResponse response, String error, String message) throws IOException {
+    private void sendUnauthorizedResponse(HttpServletRequest request, HttpServletResponse response, String error, String message) throws IOException {
+        if (response.isCommitted()) return;
+        
+        response.resetBuffer();
+        
+        String origin = request.getHeader("Origin");
+        if (origin != null) {
+            response.setHeader("Access-Control-Allow-Origin", origin);
+            response.setHeader("Vary", "Origin");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Headers", "*");
+            response.setHeader("Access-Control-Allow-Methods", "*");
+            response.setHeader("Access-Control-Expose-Headers", "*");
+        }
+        
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
         
-        String responseBody = String.format("""
-            {
-                "error": "%s",
-                "message": "%s",
-                "timestamp": "%s"
-            }
-            """, error, message, Instant.now());
+        byte[] body = new ObjectMapper().writeValueAsBytes(Map.of(
+                "error", error,
+                "message", message,
+                "timestamp", Instant.now().toString()
+        ));
         
-        response.getWriter().write(responseBody);
+        // ✅ chunked 대신 Content-Length 고정
+        response.setContentLength(body.length);
+        
+        response.getOutputStream().write(body);
+        response.flushBuffer();
     }
 }
