@@ -28,6 +28,12 @@ COPY --from=builder /workspace/monolith/main-runner/build/libs/*.jar /app/app.ja
 
 EXPOSE 8080
 
-# Railway 512MB 기준 최소 JVM 옵션
-ENV JAVA_OPTS="-Xms128m -Xmx384m -XX:MaxMetaspaceSize=128m -XX:+UseSerialGC"
+# Railway 8GB 기준
+ENV JAVA_OPTS="\
+-Xms512m \
+-Xmx6g \
+-XX:MaxMetaspaceSize=512m \
+-XX:+UseG1GC \
+-XX:MaxGCPauseMillis=200 \
+-XX:+ExitOnOutOfMemoryError"
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar /app/app.jar"]
