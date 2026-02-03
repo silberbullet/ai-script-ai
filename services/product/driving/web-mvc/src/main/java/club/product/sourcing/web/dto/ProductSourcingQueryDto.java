@@ -12,8 +12,8 @@ public final class ProductSourcingQueryDto {
             String from,
             String to,
             String keyword,
-            String lasCursorCreatAt,
-            String lastId,
+            String cursorCreatedAt,
+            String cursorId,
             int size
     ) {
     }
