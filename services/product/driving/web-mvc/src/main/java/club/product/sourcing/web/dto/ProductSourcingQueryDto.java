@@ -1,11 +1,9 @@
 package club.product.sourcing.web.dto;
 
+import club.product.sourcing.readmodel.ProductSourcingReadModel.ProductSourcingCursorSummary;
 import club.product.sourcing.readmodel.ProductSourcingReadModel.ProductSourcingDetail;
-import club.product.sourcing.readmodel.ProductSourcingReadModel.ProductSourcingSummary;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-
-import java.util.List;
 
 public final class ProductSourcingQueryDto {
     
@@ -13,14 +11,17 @@ public final class ProductSourcingQueryDto {
             @Schema(description = "상품 소싱 목록 조회조건")
             String from,
             String to,
-            String keyword
+            String keyword,
+            String lasCursorCreatAt,
+            String lastId,
+            int size
     ) {
     }
     
     @Builder
     public record ProductSourcingSummaryResponse(
             @Schema(description = "상품 소싱 목록")
-            List<ProductSourcingSummary> productSourcingList
+            ProductSourcingCursorSummary productSourcingList
     ) {
     }
     

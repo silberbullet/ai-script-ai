@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ProductSourcingQueryRepositoryPort {
     
-    List<ProductSourcingSummary> findProductSourcingSummaries(String userId, Instant fromInclusive, Instant toExclusive, String keyword);
+    List<ProductSourcingSummary> findProductSourcingSummaries(String userId, Instant fromInclusive, Instant toExclusive, String keyword, Instant cursorCreatedAt, String cursorId, int size);
     
     Optional<ProductSourcingDetail> findProductSourcingDetail(String userId, String id);
 }

@@ -29,7 +29,10 @@ public class ProductSourcingQueryRepositoryAdapter implements ProductSourcingQue
             String userId,
             Instant fromInclusive,
             Instant toExclusive,
-            String keyword
+            String keyword,
+            Instant cursorCreatedAt,
+            String cursorId,
+            int size
     ) {
         var sourcingList = queryFactory
                 .select(new QProductSourcingProjections_ProductSourcingSummaryProjection(
@@ -57,10 +60,15 @@ public class ProductSourcingQueryRepositoryAdapter implements ProductSourcingQue
                 .from(productSourcingEntity)
                 .where(
                         productSourcingEntity.userId.eq((Long.valueOf(userId))),
-                        createdFrom(fromInclusive),
-                        createdTo(toExclusive),
-                        keywordContains(keyword)
+                        betweenCreatedAt(fromInclusive, toExclusive),
+                        keywordContains(keyword),
+                        cursorCondition(cursorCreatedAt, cursorId)
                 )
+                .orderBy(
+                        productSourcingEntity.createdAt.desc(),
+                        productSourcingEntity.id.desc()
+                )
+                .limit(size + 1) // hasNext 판단용
                 .fetch();
         
         return sourcingList.stream()
@@ -102,16 +110,24 @@ public class ProductSourcingQueryRepositoryAdapter implements ProductSourcingQue
         );
     }
     
-    private static BooleanExpression createdFrom(Instant fromInclusive) {
-        return fromInclusive == null
-                ? null
-                : productSourcingEntity.createdAt.goe(fromInclusive);
+    private BooleanExpression betweenCreatedAt(Instant from, Instant to) {
+        if (from == null || to == null) return null;
+        return productSourcingEntity.createdAt.between(from, to);
     }
     
-    private static BooleanExpression createdTo(Instant toExclusive) {
-        return toExclusive == null
-                ? null
-                : productSourcingEntity.createdAt.lt(toExclusive);
+    private BooleanExpression cursorCondition(
+            Instant cursorCreatedAt,
+            String cursorId
+    ) {
+        if (cursorCreatedAt == null || cursorId == null) {
+            return null;
+        }
+        
+        return productSourcingEntity.createdAt.lt(cursorCreatedAt)
+                .or(
+                        productSourcingEntity.createdAt.eq(cursorCreatedAt)
+                                .and(productSourcingEntity.id.lt(Long.valueOf(cursorId)))
+                );
     }
     
     private static BooleanExpression keywordContains(String keyword) {

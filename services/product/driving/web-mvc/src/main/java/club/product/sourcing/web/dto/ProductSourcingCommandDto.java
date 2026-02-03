@@ -19,8 +19,17 @@ public final class ProductSourcingCommandDto {
             @Schema(description = "소싱 ID (신규 생성 시 null)", example = "12345")
             String id,
             
+            @Schema(description = "키워드", example = "이어폰")
+            String keyword,
+            
+            @Schema(description = "참고 상품", example = "도매꾹")
+            String referenceProduct,
+            
             @Schema(description = "상품명", example = "무선 블루투스 이어폰")
             String name,
+            
+            @Schema(description = "1688URL", example = "1688URL")
+            String source_url,
             
             @Schema(description = "상품 이미지 URL")
             String imageUrl,

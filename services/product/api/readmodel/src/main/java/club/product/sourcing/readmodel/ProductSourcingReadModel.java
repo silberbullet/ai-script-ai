@@ -4,6 +4,7 @@ import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 public final class ProductSourcingReadModel {
     
@@ -101,6 +102,14 @@ public final class ProductSourcingReadModel {
             
             Instant createAt,
             Instant updateAt
+    ) {
+    }
+    
+    public record ProductSourcingCursorSummary(
+            List<ProductSourcingSummary> summaryList,
+            Instant nextCursorCreatedAt,
+            String nextCursorId,
+            boolean hasNext
     ) {
     }
 }

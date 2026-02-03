@@ -64,8 +64,8 @@ COMMENT ON COLUMN "product"."product_sourcing"."min_ad_roi_percent"        IS 'ì
 
 ALTER TABLE "product"."product_sourcing" ADD CONSTRAINT "pk_product_sourcing" PRIMARY KEY ("id");
 
-CREATE INDEX IF NOT EXISTS "idx_product_sourcing_user_created_at"
-    ON "product"."product_sourcing" ("user_id", "created_at" DESC);
+CREATE INDEX IF NOT EXISTS "idx_product_sourcing_user_created_at_id"
+    ON "product"."product_sourcing" ("user_id", "created_at" DESC, id DESC);
 
 CREATE INDEX IF NOT EXISTS "idx_product_sourcing_user_keyword"
     ON "product"."product_sourcing" ("user_id", "keyword");
