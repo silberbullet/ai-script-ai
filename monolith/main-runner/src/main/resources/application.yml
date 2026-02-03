@@ -8,6 +8,7 @@ spring:
   config:
     import:
       - properties/auth/auth.yml
+      - properties/product/product.yml
       - properties/client/main.client.yml
       - properties/jwt/club.jwt.filter.yml
       - properties/jwt/main.jwt.yml

@@ -1,12 +1,14 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 val auth: String by project
+val product: String by project
 
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
     // service
     api(project(auth))
+    api(project(product))
 
     // core
     implementation(project(":exception-handler-core"))
@@ -21,7 +23,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-    // db
+    // dbProductFlywayConfig
     runtimeOnly("org.postgresql:postgresql:42.7.4")
 
     // test
