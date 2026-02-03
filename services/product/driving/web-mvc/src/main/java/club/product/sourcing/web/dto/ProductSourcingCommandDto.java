@@ -29,7 +29,7 @@ public final class ProductSourcingCommandDto {
             String name,
             
             @Schema(description = "1688URL", example = "1688URL")
-            String source_url,
+            String sourceUrl,
             
             @Schema(description = "상품 이미지 URL")
             String imageUrl,
