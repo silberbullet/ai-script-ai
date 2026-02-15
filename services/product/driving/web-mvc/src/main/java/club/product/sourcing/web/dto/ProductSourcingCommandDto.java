@@ -35,7 +35,7 @@ public final class ProductSourcingCommandDto {
             String imageUrl,
             
             @Schema(description = "원가(위안)")
-            Long costCny,
+            BigDecimal costCny,
             
             @Schema(description = "원가(원)")
             Long costKrw,

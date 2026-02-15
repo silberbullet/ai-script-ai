@@ -12,7 +12,10 @@ public enum ProductErrorCode implements ErrorCode {
     SOURCING_FORBIDDEN("해당 상품 소싱 데이터에 접근할 수 없습니다.", HttpStatus.FORBIDDEN),
     SOURCING_NAME_REQUIRED("상품명은 필수입니다.", HttpStatus.BAD_REQUEST),
     INVALID_DATE_RANGE("조회 시작일(from)은 종료일(to)보다 이전이어야 합니다.", HttpStatus.BAD_REQUEST),
-    INVALID_BULK_REQUEST("전제 저장 처리 시 유효하지 않은 요청입니다.", HttpStatus.BAD_REQUEST);
+    INVALID_BULK_REQUEST("전제 저장 처리 시 유효하지 않은 요청입니다.", HttpStatus.BAD_REQUEST),
+    CHINA_IMPORT_CALC_NOT_FOUND("중국 사입 계산기 데이터를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    CHINA_IMPORT_CALC_FORBIDDEN("해당 중국 사입 계산기 데이터에 접근할 수 없습니다.", HttpStatus.FORBIDDEN),
+    ;
    
     private final String message;
     private final HttpStatus httpStatus;
