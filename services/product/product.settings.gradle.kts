@@ -6,6 +6,7 @@ val productReadModel: String by settings
 val productApplication: String by settings
 val productRdbAdapter: String by settings
 val productWebMvcAdapter: String by settings
+val productBatchAdapter: String by settings
 
 fun getDirectories(vararg names: String): (String) -> File {
     var dir = rootDir
@@ -32,6 +33,7 @@ include(
     productApplication,
     productRdbAdapter,
     productWebMvcAdapter,
+    productBatchAdapter,
 )
 
 project(product).projectDir = productDirectory("product")
@@ -42,3 +44,4 @@ project(productReadModel).projectDir = productDirectory("readmodel")
 project(productApplication).projectDir = productDirectory("application")
 project(productRdbAdapter).projectDir = productDirectory("rdb")
 project(productWebMvcAdapter).projectDir = productDirectory("web-mvc")
+project(productBatchAdapter).projectDir = productDirectory("batch")

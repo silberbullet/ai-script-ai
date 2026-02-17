@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public enum ProductErrorCode implements ErrorCode {
-    USER_NOT_FOUND("상품 소싱 데이터 사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    USER_NOT_FOUND("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     SOURCING_NOT_FOUND("상품 소싱 데이터를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     SOURCING_FORBIDDEN("해당 상품 소싱 데이터에 접근할 수 없습니다.", HttpStatus.FORBIDDEN),
     SOURCING_NAME_REQUIRED("상품명은 필수입니다.", HttpStatus.BAD_REQUEST),
@@ -15,6 +15,12 @@ public enum ProductErrorCode implements ErrorCode {
     INVALID_BULK_REQUEST("전제 저장 처리 시 유효하지 않은 요청입니다.", HttpStatus.BAD_REQUEST),
     CHINA_IMPORT_CALC_NOT_FOUND("중국 사입 계산기 데이터를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     CHINA_IMPORT_CALC_FORBIDDEN("해당 중국 사입 계산기 데이터에 접근할 수 없습니다.", HttpStatus.FORBIDDEN),
+    DETAIL_PAGE_PLAN_NOT_FOUND("상세페이지 기획을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    DETAIL_PAGE_PLAN_FORBIDDEN("해당 상세페이지 기획에 접근할 수 없습니다.", HttpStatus.FORBIDDEN),
+    THUMBNAIL_PLAN_NOT_FOUND("썸네일 기획을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    THUMBNAIL_PLAN_FORBIDDEN("해당 썸네일 기획에 접근할 수 없습니다.", HttpStatus.FORBIDDEN),
+    PLAN_NAME_REQUIRED("기획명은 필수입니다.", HttpStatus.BAD_REQUEST),
+    PAYLOAD_REQUIRED("payload_json은 필수입니다.", HttpStatus.BAD_REQUEST),
     ;
    
     private final String message;
