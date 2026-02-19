@@ -16,7 +16,7 @@ ALTER TABLE "product"."detail_page_file"
     ADD CONSTRAINT "pk_detail_page_file" PRIMARY KEY ("id");
 
 CREATE INDEX IF NOT EXISTS "idx_detail_page_file_plan_sort"
-    ON "product"."detail_page_file" ("plan_id", "sort_order");
+    ON "product"."detail_page_file" ("product_plan_id", "sort_order");
 
 CREATE INDEX IF NOT EXISTS "idx_detail_page_file_user_plan"
-    ON "product"."detail_page_file" ("user_id", "plan_id");
+    ON "product"."detail_page_file" ("user_id", "product_plan_id");

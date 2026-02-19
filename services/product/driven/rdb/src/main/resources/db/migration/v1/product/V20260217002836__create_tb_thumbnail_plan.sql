@@ -27,7 +27,7 @@ CREATE INDEX IF NOT EXISTS "idx_thumbnail_plan_user_created_at_id"
     ON "product"."thumbnail_plan" ("user_id", "created_at" DESC, "id" DESC);
 
 CREATE INDEX IF NOT EXISTS "idx_thumbnail_plan_user_sourcing"
-    ON "product"."thumbnail_plan" ("user_id", "sourcing_id");
+    ON "product"."thumbnail_plan" ("user_id", "product_sourcing_id");
 
 CREATE INDEX IF NOT EXISTS "idx_thumbnail_plan_user_status"
     ON "product"."thumbnail_plan" ("user_id", "status");-- Flyway Migration

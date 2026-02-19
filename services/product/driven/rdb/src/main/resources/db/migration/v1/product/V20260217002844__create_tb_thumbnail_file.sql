@@ -15,12 +15,8 @@ CREATE TABLE IF NOT EXISTS "product"."thumbnail_file" (
 ALTER TABLE "product"."thumbnail_file"
     ADD CONSTRAINT "pk_thumbnail_file" PRIMARY KEY ("id");
 
-ALTER TABLE "product"."thumbnail_file"
-    ADD CONSTRAINT "fk_thumbnail_file_plan"
-        FOREIGN KEY ("plan_id") REFERENCES "product"."thumbnail_plan" ("id");
-
 CREATE INDEX IF NOT EXISTS "idx_thumbnail_file_plan_sort"
-    ON "product"."thumbnail_file" ("plan_id", "sort_order");
+    ON "product"."thumbnail_file" ("product_plan_id", "sort_order");
 
 CREATE INDEX IF NOT EXISTS "idx_thumbnail_file_user_plan"
-    ON "product"."thumbnail_file" ("user_id", "plan_id");
+    ON "product"."thumbnail_file" ("user_id", "product_plan_id");
