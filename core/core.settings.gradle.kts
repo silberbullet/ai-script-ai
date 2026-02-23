@@ -24,6 +24,8 @@ include(
     ":redis-cache",
     ":upload-image-api",
     ":upload-image-local",
+    ":batch-api",
+    ":batch-core"
 )
 
 project(":time-util").projectDir = core["time-util"]!!
@@ -45,3 +47,5 @@ project(":redis-template").projectDir = core["redis-template"]!!
 project(":redis-cache").projectDir = core["redis-cache"]!!
 project(":upload-image-api").projectDir = core["upload-image-api"]!!
 project(":upload-image-local").projectDir = core["upload-image-local"]!!
+project(":batch-api").projectDir = core["batch-api"]!!
+project(":batch-core").projectDir = core["batch-core"]!!

@@ -43,7 +43,7 @@ public class ProductSourcing {
     ====================== */
     
     /** 엑셀: 원가(위안) (F열) */
-    private Long costCny;
+    private BigDecimal costCny;
     
     /** 엑셀: 원가(원) (G열) */
     private Long costKrw;

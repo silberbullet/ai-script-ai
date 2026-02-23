@@ -31,7 +31,7 @@ public final class ProductSourcingReadModel {
                원가
             ====================== */
             
-            Long costCny,
+            BigDecimal costCny,
             Long costKrw,
 
             /* =====================
@@ -78,7 +78,7 @@ public final class ProductSourcingReadModel {
                원가
             ====================== */
             
-            Long costCny,
+            BigDecimal costCny,
             Long costKrw,
 
             /* =====================

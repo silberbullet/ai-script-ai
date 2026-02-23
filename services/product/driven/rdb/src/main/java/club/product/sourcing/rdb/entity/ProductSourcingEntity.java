@@ -55,7 +55,7 @@ public class ProductSourcingEntity extends SnowflakeBaseTimeEntity {
      * 엑셀: 원가(위안) (F열)
      */
     @Column(name = "cost_cny")
-    public Long costCny;
+    public BigDecimal costCny;
     
     /**
      * 엑셀: 원가(원) (G열)
@@ -118,7 +118,7 @@ public class ProductSourcingEntity extends SnowflakeBaseTimeEntity {
     public BigDecimal minAdRoiPercent;
     
     @Builder(builderClassName = "UpdateProductSourcingEntityBuilder", builderMethodName = "prepareUpdate", buildMethodName = "update")
-    public void update(String keyword, String referenceProduct, String sourceUrl, String imageUrl, String name, Long costCny, Long costKrw, String coupangCategory, String wingLogisticsCategory, Long salePriceKrw, BigDecimal feeRatePercent, Long feeAmountKrw, Long vatKrw, Long grossMarginKrw, BigDecimal grossMarginRatePercent, BigDecimal minAdRoiPercent) {
+    public void update(String keyword, String referenceProduct, String sourceUrl, String imageUrl, String name, BigDecimal costCny, Long costKrw, String coupangCategory, String wingLogisticsCategory, Long salePriceKrw, BigDecimal feeRatePercent, Long feeAmountKrw, Long vatKrw, Long grossMarginKrw, BigDecimal grossMarginRatePercent, BigDecimal minAdRoiPercent) {
         this.keyword = keyword;
         this.referenceProduct = referenceProduct;
         this.sourceUrl = sourceUrl;

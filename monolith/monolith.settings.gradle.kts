@@ -7,6 +7,8 @@ val monolith = rootDir.resolve("monolith")
 
 include(
     ":main-runner",
+    ":batch-runner"
 )
 
 project(":main-runner").projectDir = monolith["main-runner"]!!
+project(":batch-runner").projectDir = monolith["batch-runner"]!!
