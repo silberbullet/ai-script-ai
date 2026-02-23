@@ -33,7 +33,7 @@ include(
     productApplication,
     productRdbAdapter,
     productWebMvcAdapter,
-    productBatchAdapter,
+    // productBatchAdapter,
 )
 
 project(product).projectDir = productDirectory("product")
@@ -44,4 +44,4 @@ project(productReadModel).projectDir = productDirectory("readmodel")
 project(productApplication).projectDir = productDirectory("application")
 project(productRdbAdapter).projectDir = productDirectory("rdb")
 project(productWebMvcAdapter).projectDir = productDirectory("web-mvc")
-project(productBatchAdapter).projectDir = productDirectory("batch")
+// project(productBatchAdapter).projectDir = productDirectory("batch")
