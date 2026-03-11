@@ -2,6 +2,7 @@ package club.product.planning.service;
 
 import club.product.planning.detailpage.domain.DetailPagePlan;
 import club.product.planning.port.DetailPagePlanCommandRepositoryPort;
+import club.product.planning.port.DetailPagePlanUploadPort;
 import club.product.planning.type.PlanStatus;
 import club.product.planning.usecase.DetailPagePlanCreateUseCase;
 import club.product.planning.usecase.DetailPagePlanDeleteUseCase;
@@ -19,6 +20,7 @@ import static club.product.sourcing.exception.ProductErrorCode.USER_NOT_FOUND;
 public class DetailPagePlanCommandService implements DetailPagePlanCreateUseCase, DetailPagePlanUpdateUseCase, DetailPagePlanDeleteUseCase {
     
     private final DetailPagePlanCommandRepositoryPort repositoryPort;
+    private final DetailPagePlanUploadPort uploadPort;
 
     @Override
     public DetailPagePlan create(String userId, DetailPagePlan plan) {

@@ -24,6 +24,7 @@ include(
     ":redis-cache",
     ":upload-image-api",
     ":upload-image-local",
+    ":upload-s3-storage",
     ":batch-api",
     ":batch-core"
 )
@@ -47,5 +48,6 @@ project(":redis-template").projectDir = core["redis-template"]!!
 project(":redis-cache").projectDir = core["redis-cache"]!!
 project(":upload-image-api").projectDir = core["upload-image-api"]!!
 project(":upload-image-local").projectDir = core["upload-image-local"]!!
+project(":upload-s3-storage").projectDir = core["upload-s3-storage"]!!
 project(":batch-api").projectDir = core["batch-api"]!!
 project(":batch-core").projectDir = core["batch-core"]!!
